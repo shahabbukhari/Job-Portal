@@ -1,13 +1,37 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 
 import styles from "./popularjobcard.style";
 
-const PopularJobCard = ({ title }) => {
+const PopularJobCard = ({ item, selectedJob, handleCardPress }) => {
   return (
-    <View>
-      <Text>{title}</Text>
-    </View>
+    <TouchableOpacity
+      style={styles.container(selectedJob, item)}
+      onPress={() => handleCardPress(item)}
+    >
+      <TouchableOpacity style={styles.logoContainer(selectedJob, item)}>
+        <Image
+          source={{
+            uri: item?.employer_logo
+              ? item?.employer_logo
+              : "https://cdn.cleverism.com/wp-content/themes/cleverism/assets/img/src/logo-placeholder.png",
+          }}
+          style={styles.logoImage}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
+      <Text style={styles.companyName} numberOfLines={1}>
+        {item?.employer_name}
+      </Text>
+      <View style={styles.infoContainer}>
+        <Text style={styles.jobName(selectedJob, item)} numberOfLines={1}>
+          {item?.job_title}
+        </Text>
+        <Text style={styles.location} numberOfLines={1}>
+          {item?.job_country}
+        </Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 

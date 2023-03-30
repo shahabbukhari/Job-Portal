@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -17,7 +17,9 @@ const Popularjobs = () => {
     query: "React Developer",
     num_pages: 1,
   });
-  console.log(data);
+  const [selectedJob, setSelectedJob] = useState();
+
+  console.log(isError, isLoading);
 
   return (
     <View style={styles.container}>
@@ -35,10 +37,16 @@ const Popularjobs = () => {
         ) : (
           <FlatList
             data={data}
-            renderItem={({ job }) => <PopularJobCard title={job?.job_title} />}
-            keyExtractor={(item) => item?.job_title?.toString()}
-            horizontal
+            renderItem={({ item }) => (
+              <PopularJobCard
+                item={item}
+                selectedJob={selectedJob}
+                handleCardPress={() => {}}
+              />
+            )}
+            keyExtractor={(item) => item.job_id}
             contentContainerStyle={{ columnGap: SIZES.medium }}
+            horizontal
           />
         )}
       </View>
